@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PieceManager : MonoBehaviour
 {
+    public bool bothKingsAlive = true;
+
     public GameObject piecePrefab;
 
     private List<Piece> whitePieces = null;
@@ -11,9 +13,10 @@ public class PieceManager : MonoBehaviour
 
     private enum p { Pawn, Rook, Knight, Bishop, King, Queen };
 
+    //The layout of the board, the original location and type of the piece. 16 in total for each side.
     private int[] pieceOrder = new int[16]
     {
-        (int)p.Pawn, (int)p.Pawn, (int)p.Pawn, (int)p.Pawn, (int)p.Pawn, (int)p.Pawn, (int)p.Pawn, (int)p.Pawn,
+        (int)p.Pawn, (int)p.Pawn,   (int)p.Pawn,   (int)p.Pawn, (int)p.Pawn,   (int)p.Pawn,  (int)p.Pawn,   (int)p.Pawn,
         (int)p.Rook, (int)p.Knight, (int)p.Bishop, (int)p.King, (int)p.Queen, (int)p.Bishop, (int)p.Knight, (int)p.Rook
     };
 
@@ -30,10 +33,13 @@ public class PieceManager : MonoBehaviour
     public void Init(Board board)
     {
         whitePieces = CreatePieces(Color.white, new Color32(80, 124, 159, 255), board);
-        blackPieces = CreatePieces(Color.white, new Color32(210, 95, 64, 255), board);
+        blackPieces = CreatePieces(Color.black, new Color32(210, 95, 64, 255), board);
 
+        //1, 0 for white because the royalty row will be at the bottom. 6, 7 for black because the royalty row will be at the top.
         PlacePieces(1, 0, whitePieces, board);
         PlacePieces(6, 7, blackPieces, board);
+
+        SwitchSides(Color.black);
     }
 
     private List<Piece> CreatePieces(Color teamColor, Color32 spriteColor, Board board)
@@ -62,12 +68,45 @@ public class PieceManager : MonoBehaviour
 
     private void PlacePieces(int pawnRow, int royaltyRow, List<Piece> pieces, Board board)
     {
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 8; i++) //loops 8 times, placing a pawn and royalty piece each time.
         {
-            pieces[i].SetSpace(board.allSpaces[i, pawnRow]);
+            pieces[i].SetSpace(board.allSpaces[i, pawnRow]); 
 
-            pieces[i + 8].SetSpace(board.allSpaces[i, royaltyRow]);
+            pieces[ i + (pieces.Count / 2)].SetSpace(board.allSpaces[i, royaltyRow]); //start from the beginning of the royalty pieces; skips the pawn pieces.
         }
+    }
+
+    private void SetInteractive(List<Piece> allPieces, bool value)
+    {
+        foreach (Piece piece in allPieces)
+            piece.enabled = value;
+    }
+
+    public void SwitchSides(Color color)
+    {
+        if (!bothKingsAlive)
+        {
+            ResetPieces();
+
+            bothKingsAlive = true;
+
+            color = Color.black;
+        }
+
+        bool isBlackTurn = color == Color.white ? true : false;
+        Debug.Log("is it blacks turn? " + isBlackTurn);
+
+        SetInteractive(whitePieces, !isBlackTurn);
+        SetInteractive(blackPieces, isBlackTurn);
+    }
+
+    public void ResetPieces()
+    {
+        foreach (Piece piece in whitePieces)
+            piece.Reset();
+
+        foreach(Piece piece in blackPieces)
+            piece.Reset();
     }
 
     // Start is called before the first frame update

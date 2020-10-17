@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum SpaceState
+{
+    None, Friendly, Enemy, Free, OutOfBounds
+}
+
 public class Board : MonoBehaviour
 {
     public GameObject spacePrefab;
@@ -30,6 +35,27 @@ public class Board : MonoBehaviour
 
                 allSpaces[finalX, j].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             }
+    }
+
+    public SpaceState ValidateSpace(int targetX, int targetY, Piece checkingPiece)
+    {
+        if (targetX < 0 || targetX > 7 || targetY < 0 || targetY > 7)
+            return SpaceState.OutOfBounds;
+
+        Space targetSpace = allSpaces[targetX, targetY];
+
+        if (targetSpace.currentPiece != null)
+        {
+            //if friendly
+            if (checkingPiece.color == targetSpace.currentPiece.color)
+                return SpaceState.Friendly;
+
+            //if enemy
+            if (checkingPiece.color != targetSpace.currentPiece.color)
+                return SpaceState.Enemy;
+        }
+
+        return SpaceState.Free;
     }
 
     // Start is called before the first frame update

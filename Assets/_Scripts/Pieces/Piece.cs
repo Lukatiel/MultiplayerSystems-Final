@@ -46,49 +46,63 @@ public abstract class Piece : EventTrigger
         gameObject.SetActive(false);
     }
 
-    private void CreateCellPath(int xDir, int yDir, int movement)
+    private void CreateSpacePath(int xDir, int yDir, int movement)
     {
-        int currX = currentSpace.boardPosition.x;
-        int currY = currentSpace.boardPosition.y;
+        int targX = currentSpace.boardPosition.x;
+        int targY = currentSpace.boardPosition.y;
 
         for (int i = 1; i <= movement; i++)
         {
-            currX += xDir;
-            currY += yDir;
+            targX += xDir;
+            targY += yDir;
 
-            highlightedSpaces.Add(currentSpace.board.allSpaces[currX, currY]);
+            //get the state of the target space.
+            SpaceState spaceState = SpaceState.None;
+            spaceState = currentSpace.board.ValidateSpace(targX, targY, this);
+
+            if (spaceState == SpaceState.Enemy)
+            {
+                highlightedSpaces.Add(currentSpace.board.allSpaces[targX, targY]);
+                break;
+            }
+
+            //if the cell is not free, break.
+            if (spaceState != SpaceState.Free)
+                break;
+
+            //add to list
+            highlightedSpaces.Add(currentSpace.board.allSpaces[targX, targY]);
         }
     }
 
     protected virtual void CheckPathing()
     {
         //horizontal
-        CreateCellPath(1, 0, movement.x);
-        CreateCellPath(-1, 0, movement.x);
+        CreateSpacePath(1, 0, movement.x);
+        CreateSpacePath(-1, 0, movement.x);
 
         //vertical
-        CreateCellPath(0, 1, movement.y);
-        CreateCellPath(0, -1, movement.y);
+        CreateSpacePath(0, 1, movement.y);
+        CreateSpacePath(0, -1, movement.y);
 
         //upper diagonal
-        CreateCellPath(1, 1, movement.z);
-        CreateCellPath(-1, 1, movement.z);
+        CreateSpacePath(1, 1, movement.z);
+        CreateSpacePath(-1, 1, movement.z);
 
         //lower diagonal
-        CreateCellPath(-1, -1, movement.z);
-        CreateCellPath(1, -1, movement.z);
+        CreateSpacePath(-1, -1, movement.z);
+        CreateSpacePath(1, -1, movement.z);
     }
 
-    protected void ShowCells()
+    protected void ShowSpaces()
     {
         foreach (Space space in highlightedSpaces)
         {
           space.mOutlineImage.enabled = true;
-          Debug.Log("pos: " + space.boardPosition + " ?: " + space.isActiveAndEnabled);
         } 
     }
 
-    protected void ClearCells()
+    protected void ClearSpaces()
     {
         foreach (Space space in highlightedSpaces)
             space.mOutlineImage.enabled = false;
@@ -114,7 +128,7 @@ public abstract class Piece : EventTrigger
         base.OnBeginDrag(eventData);
 
         CheckPathing();
-        ShowCells();
+        ShowSpaces();
     }
 
     public override void OnDrag(PointerEventData eventData)
@@ -141,7 +155,7 @@ public abstract class Piece : EventTrigger
     {
         base.OnEndDrag(eventData);
 
-        ClearCells();
+        ClearSpaces();
 
         if (!targetSpace) //if no current space, set back to original space.
         {
@@ -150,6 +164,8 @@ public abstract class Piece : EventTrigger
         }
 
         Move();
+
+        pieceManager.SwitchSides(color);
     }
 
     // Start is called before the first frame update
