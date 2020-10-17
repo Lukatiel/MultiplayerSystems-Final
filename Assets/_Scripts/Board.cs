@@ -28,7 +28,7 @@ public class Board : MonoBehaviour
                 int offset = (j % 2 != 0) ? 0 : 1;
                 int finalX = i + offset;
 
-                allSpaces[finalX, j].GetComponent<Image>().color = new Color32(230, 220, 187, 255);
+                allSpaces[finalX, j].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             }
     }
 

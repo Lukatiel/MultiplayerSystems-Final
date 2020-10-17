@@ -6,12 +6,9 @@ using UnityEngine.UI;
 public class Space : MonoBehaviour
 {
     public Image mOutlineImage;
-
-    [HideInInspector]
+    public Piece currentPiece;
     public Vector2Int boardPosition = Vector2Int.zero;
-    [HideInInspector]
     public Board board = null;
-    [HideInInspector]
     public RectTransform rectTransform = null;
 
     public void Setup(Vector2Int newBoardPosition, Board newBoard)
@@ -20,6 +17,14 @@ public class Space : MonoBehaviour
         board = newBoard;
 
         rectTransform = GetComponent<RectTransform>();
+    }
+
+    public void RemovePiece()
+    {
+        if (currentPiece != null)
+        {
+            currentPiece.Kill();
+        }
     }
 
     // Start is called before the first frame update

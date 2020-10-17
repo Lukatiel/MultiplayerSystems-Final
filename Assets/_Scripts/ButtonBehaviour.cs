@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class ButtonBehaviour : MonoBehaviour
 {
     [SerializeField]
-    private string sceneName;
+    private string sceneName = "Game";
 
     public void LoadScene()
     {
