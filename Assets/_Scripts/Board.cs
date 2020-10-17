@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum SpaceState
+public enum SpaceState //the states that any one space can be in.
 {
     None, Friendly, Enemy, Free, OutOfBounds
 }
@@ -37,25 +37,25 @@ public class Board : MonoBehaviour
             }
     }
 
-    public SpaceState ValidateSpace(int targetX, int targetY, Piece checkingPiece)
+    public SpaceState ValidateSpace(int targetX, int targetY, Piece piece)
     {
-        if (targetX < 0 || targetX > 7 || targetY < 0 || targetY > 7)
+        if (targetX < 0 || targetX > 7 || targetY < 0 || targetY > 7) //if the space is out of bounds, do not check if the piece can go there since it will throw and index out of bounds error.
             return SpaceState.OutOfBounds;
 
         Space targetSpace = allSpaces[targetX, targetY];
 
-        if (targetSpace.currentPiece != null)
+        if (targetSpace.currentPiece != null) //bulletproofing.
         {
-            //if friendly
-            if (checkingPiece.color == targetSpace.currentPiece.color)
+            //if the colors are the same the piece at that space is friendly.
+            if (piece.color == targetSpace.currentPiece.color)
                 return SpaceState.Friendly;
 
-            //if enemy
-            if (checkingPiece.color != targetSpace.currentPiece.color)
+            //if the colors are different the piece at that space is an enemy.
+            if (piece.color != targetSpace.currentPiece.color)
                 return SpaceState.Enemy;
         }
 
-        return SpaceState.Free;
+        return SpaceState.Free; //if everything is passed, that space is simply free.
     }
 
     // Start is called before the first frame update

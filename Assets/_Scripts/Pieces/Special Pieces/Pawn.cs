@@ -9,7 +9,7 @@ public class Pawn : Piece
     {
         base.Setup(newTeamColor, newSpriteColor, newPieceManager);
 
-        GetComponent<Image>().sprite = Resources.Load<Sprite>("white_pawn.png");
+        GetComponent<Image>().sprite = Resources.Load<Sprite>("white_pawn");
     }
 
     // Start is called before the first frame update

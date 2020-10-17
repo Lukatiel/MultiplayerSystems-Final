@@ -17,7 +17,7 @@ public class PieceManager : MonoBehaviour
     private int[] pieceOrder = new int[16]
     {
         (int)p.Pawn, (int)p.Pawn,   (int)p.Pawn,   (int)p.Pawn, (int)p.Pawn,   (int)p.Pawn,  (int)p.Pawn,   (int)p.Pawn,
-        (int)p.Rook, (int)p.Knight, (int)p.Bishop, (int)p.King, (int)p.Queen, (int)p.Bishop, (int)p.Knight, (int)p.Rook
+        (int)p.Rook, (int)p.Knight, (int)p.Bishop, (int)p.Queen, (int)p.King, (int)p.Bishop, (int)p.Knight, (int)p.Rook
     };
 
     private Dictionary<int, Type> pieceLibrary = new Dictionary<int, Type>()
@@ -32,8 +32,8 @@ public class PieceManager : MonoBehaviour
 
     public void Init(Board board)
     {
-        whitePieces = CreatePieces(Color.white, new Color32(80, 124, 159, 255), board);
-        blackPieces = CreatePieces(Color.black, new Color32(210, 95, 64, 255), board);
+        whitePieces = CreatePieces(Color.white, new Color32(255, 255, 255, 255), board);
+        blackPieces = CreatePieces(Color.black, new Color32(128, 128, 128, 255), board);
 
         //1, 0 for white because the royalty row will be at the bottom. 6, 7 for black because the royalty row will be at the top.
         PlacePieces(1, 0, whitePieces, board);
