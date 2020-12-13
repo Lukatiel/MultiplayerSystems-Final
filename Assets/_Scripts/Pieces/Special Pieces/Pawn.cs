@@ -43,19 +43,19 @@ public class Pawn : Piece
 
     protected override void CheckPathing()
     {
-        int currentX = currentSpace.boardPosition.x;
-        int currentY = currentSpace.boardPosition.y;
+        int currX = currentSpace.boardPosition.x;
+        int currY = currentSpace.boardPosition.y;
 
         //Check diagonal left.
-        SameState(currentX - movement.z, currentY + movement.z, SpaceState.Enemy);
+        SameState(currX - movement.z, currY + movement.z, SpaceState.Enemy);
 
         //Check forward.
-        if (SameState(currentX, currentY + movement.y, SpaceState.Free))
+        if (SameState(currX, currY + movement.y, SpaceState.Free))
             if (isFirstMove)
-                SameState(currentX, currentY + (movement.y * 2), SpaceState.Free);
+                SameState(currX, currY + (movement.y * 2), SpaceState.Free);
         
         //Check diagonal right.
-        SameState(currentX + movement.z, currentY + movement.z, SpaceState.Enemy);
+        SameState(currX + movement.z, currY + movement.z, SpaceState.Enemy);
     }
 
     // Start is called before the first frame update
