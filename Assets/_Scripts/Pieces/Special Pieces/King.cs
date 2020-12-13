@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class King : Piece
 {
-        public override void Setup(Color newTeamColor, Color32 newSpriteColor, PieceManager newPieceManager)
+    public override void Setup(Color newTeamColor, Color32 newSpriteColor, PieceManager newPieceManager)
     {
         base.Setup(newTeamColor, newSpriteColor, newPieceManager);
 
@@ -13,15 +13,22 @@ public class King : Piece
         GetComponent<Image>().sprite = Resources.Load<Sprite>("white_king");
     }
 
+    public override void Kill()
+    {
+        base.Kill();
+
+        pieceManager.bothKingsAlive = false;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

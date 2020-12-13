@@ -40,7 +40,7 @@ public abstract class Piece : EventTrigger
         SetSpace(originalSpace);
     }
 
-    public void Kill()
+    virtual public void Kill()
     {
         currentSpace.currentPiece = null;
         gameObject.SetActive(false);

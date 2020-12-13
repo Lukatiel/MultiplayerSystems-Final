@@ -84,17 +84,22 @@ public class PieceManager : MonoBehaviour
 
     public void SwitchSides(Color color)
     {
+        bool isBlackTurn = color == Color.white ? true : false;
+        Debug.Log("is it blacks turn? " + isBlackTurn);
+
         if (!bothKingsAlive)
         {
+            if (isBlackTurn)
+                Debug.Log("White wins!");
+            else
+                Debug.Log("Black wins!");
+
             ResetPieces();
 
             bothKingsAlive = true;
 
             color = Color.black;
         }
-
-        bool isBlackTurn = color == Color.white ? true : false;
-        Debug.Log("is it blacks turn? " + isBlackTurn);
 
         SetInteractive(whitePieces, !isBlackTurn);
         SetInteractive(blackPieces, isBlackTurn);
