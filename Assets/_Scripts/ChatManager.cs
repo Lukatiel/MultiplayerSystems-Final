@@ -5,7 +5,7 @@ using TMPro;
 
 public class ChatManager : MonoBehaviour
 {
-    public TMP_Text[] chatMessages;
+    public TMP_Text[] chatMessages = { };
     public TMP_InputField chatInput;
 
     // Start is called before the first frame update
@@ -23,10 +23,17 @@ public class ChatManager : MonoBehaviour
     public void UpdateMessage()
     {
         Debug.Log("Hello");
-        for (int i = 0; i < chatMessages.Length; i++)
+        int count = 0;
+
+        //for (int i = 0; i < chatMessages.Length; i++)
+        //{
+        //    Debug.Log(chatMessages[1].text);
+        //    //chatMessages[i + 1].text = chatMessages[i].text;
+        //}
+        foreach (TMP_Text text in chatMessages)
         {
-            Debug.Log(chatMessages[1].text);
-            //chatMessages[i + 1].text = chatMessages[i].text;
+            chatMessages[count + 1].text = chatMessages[count].text;
+            count++;
         }
         chatMessages[0].text = chatInput.text;
 
