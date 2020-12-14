@@ -11,6 +11,7 @@ public class Rook : Piece
 
         movement = new Vector3Int(7, 7, 0);
         GetComponent<Image>().sprite = Resources.Load<Sprite>("white_rook");
+        name = "Rook";
     }
 
     // Start is called before the first frame update

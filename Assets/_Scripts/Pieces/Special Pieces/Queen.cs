@@ -11,6 +11,7 @@ public class Queen : Piece
 
         movement = new Vector3Int(7, 7, 7);
         GetComponent<Image>().sprite = Resources.Load<Sprite>("white_queen");
+        name = "Queen";
     }
 
     // Start is called before the first frame update

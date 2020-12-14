@@ -11,6 +11,7 @@ public class Bishop : Piece
 
         movement = new Vector3Int(0, 0, 7);
         GetComponent<Image>().sprite = Resources.Load<Sprite>("white_bishop");
+        name = "Bishop";
     }
     // Start is called before the first frame update
     void Start()

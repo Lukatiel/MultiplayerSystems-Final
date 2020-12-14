@@ -11,6 +11,8 @@ public class King : Piece
 
         movement = new Vector3Int(1, 1, 1);
         GetComponent<Image>().sprite = Resources.Load<Sprite>("white_king");
+
+        name = "King";
     }
 
     public override void Kill()

@@ -8,8 +8,9 @@ public class Knight : Piece
     public override void Setup(Color newTeamColor, Color32 newSpriteColor, PieceManager newPieceManager)
     {
         base.Setup(newTeamColor, newSpriteColor, newPieceManager);
-
+        
         GetComponent<Image>().sprite = Resources.Load<Sprite>("white_knight");
+        name = "Knight";
     }
     private void SameState(int targetX, int targetY)
     {

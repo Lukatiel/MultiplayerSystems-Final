@@ -17,6 +17,8 @@ public class Pawn : Piece
         //Pawn specific. Set direction based on what side the pawn is at.
         movement = color == Color.white ? new Vector3Int(0, 1, 1) : new Vector3Int(0, -1, -1);
         GetComponent<Image>().sprite = Resources.Load<Sprite>("white_pawn");
+
+        name = "Pawn";
     }
 
     protected override void Move()
@@ -61,6 +63,7 @@ public class Pawn : Piece
     // Start is called before the first frame update
     void Start()
     {
+        transform.name = transform.name.Replace("(clone)", "").Trim();
     }
 
     // Update is called once per frame

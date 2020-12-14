@@ -14,6 +14,7 @@ public abstract class Piece : EventTrigger
     protected Space targetSpace = null;
     protected Vector3Int movement = Vector3Int.one;
     protected List<Space> highlightedSpaces = new List<Space>(); //List of available spaces the piece can move to.
+    protected string name = "Piece";
 
     public virtual void Setup(Color newTeamColor, Color32 newSpriteColor, PieceManager newPieceManager)
     {
@@ -42,6 +43,7 @@ public abstract class Piece : EventTrigger
 
     virtual public void Kill()
     {
+        Debug.Log(name + " has been taken.");
         currentSpace.currentPiece = null;
         gameObject.SetActive(false);
     }
@@ -171,7 +173,7 @@ public abstract class Piece : EventTrigger
     // Start is called before the first frame update
     void Start()
     {
-
+        transform.name = transform.name.Replace("(clone)", "").Trim();
     }
 
     // Update is called once per frame
